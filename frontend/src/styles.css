@@ -1,0 +1,282 @@
+:root {
+  /* ---- Color ---- */
+  --bg: #0b0e14;
+  --surface: #141924;
+  --surface-raised: #1b2230;
+  --surface-overlay: #212a3a;
+  --border: #262f42;
+  --border-strong: #34405a;
+  --text: #e7e9ee;
+  --text-muted: #8b93a7;
+  --text-faint: #5c6478;
+
+  --accent: #e8a33d;        /* marigold — section flags, progress, brand */
+  --accent-dim: #8a6524;
+  --accent-soft: rgba(232, 163, 61, 0.12);
+  --complete: #35c48c;      /* teal-green — completion state */
+  --complete-soft: rgba(53, 196, 140, 0.12);
+  --danger: #e2574c;
+  --danger-soft: rgba(226, 87, 76, 0.12);
+
+  /* ---- Type ---- */
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --text-xs: 11px;
+  --text-sm: 12.5px;
+  --text-base: 14px;
+  --text-md: 15px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+  --text-2xl: 28px;
+
+  /* ---- Space (4px scale) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* ---- Radius ---- */
+  --radius-xs: 5px;
+  --radius-sm: 7px;
+  --radius: 11px;
+  --radius-lg: 16px;
+
+  /* ---- Elevation ---- */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.24);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.32);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.4);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 0.12s;
+  --dur: 0.18s;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+a { color: inherit; }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* =========================================================================
+   Shared primitives — every component should reach for these instead of
+   redefining its own button/input/card. Consistency here is what separates
+   a real product surface from a pile of one-off styled divs.
+   ========================================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  padding: 9px 15px;
+  border: 1px solid transparent;
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+  white-space: nowrap;
+  text-decoration: none;
+}
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; cursor: default; pointer-events: none; }
+
+.btn-primary { background: var(--accent); color: #17110a; }
+.btn-primary:hover { background: #f0ad4d; }
+
+.btn-secondary { background: var(--surface-raised); color: var(--text); border-color: var(--border); }
+.btn-secondary:hover { border-color: var(--border-strong); }
+
+.btn-ghost { background: transparent; color: var(--text-muted); }
+.btn-ghost:hover { color: var(--text); background: var(--surface-raised); }
+
+.btn-danger { background: transparent; color: var(--danger); border-color: transparent; }
+.btn-danger:hover { background: var(--danger-soft); }
+
+.btn-sm { padding: 6px 11px; font-size: var(--text-xs); }
+.btn-icon { padding: 8px; }
+
+.field { display: flex; flex-direction: column; gap: var(--space-2); }
+.field label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.field input, .field textarea {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  color: var(--text);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+.field input:focus, .field textarea:focus {
+  border-color: var(--accent-dim);
+  outline: none;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+}
+.badge-accent { color: var(--accent); background: var(--accent-soft); border-color: rgba(232,163,61,0.35); }
+.badge-complete { color: var(--complete); background: var(--complete-soft); border-color: rgba(53,196,140,0.35); }
+.badge-neutral { color: var(--text-muted); background: var(--surface-raised); border-color: var(--border); }
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  line-height: 1.5;
+}
+.alert-danger { color: var(--danger); background: var(--danger-soft); border-color: rgba(226,87,76,0.35); }
+.alert-success { color: var(--complete); background: var(--complete-soft); border-color: rgba(53,196,140,0.35); }
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  animation: ct-spin 0.7s linear infinite;
+}
+@keyframes ct-spin { to { transform: rotate(360deg); } }
+
+.state-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 40vh;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.empty-state {
+  padding: 72px 24px;
+  text-align: center;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+.empty-state svg { color: var(--text-faint); margin-bottom: var(--space-2); }
+.empty-state-title { color: var(--text); font-size: var(--text-md); font-weight: 600; }
+.empty-state-sub { font-size: var(--text-sm); max-width: 360px; line-height: 1.5; }
+
+.divider-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.divider-label::before, .divider-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.ct-app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+.ct-app-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Shared admin-panel primitives — every AdminDashboard panel can rely on
+   these being present regardless of which other panel (if any) is
+   currently mounted, since only one panel exists in the DOM at a time. */
+.ct-panel { display: flex; flex-direction: column; gap: var(--space-4); }
+.ct-settings-hint { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.55; margin: 0; max-width: 420px; }
+.ct-table-card { overflow: hidden; }
+.ct-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.ct-table th {
+  text-align: left;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-raised);
+}
+.ct-table td { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border); }
+.ct-table tr:last-child td { border-bottom: none; }
+.ct-muted-cell { color: var(--text-muted); }
+.ct-table-actions { text-align: right; }

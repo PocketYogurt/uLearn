@@ -1,0 +1,27 @@
+# Secrets
+.env
+
+# Your real deployment config - contains your actual ports/settings.
+# The public-facing equivalent is docker-compose.example.yml.
+docker-compose.yml
+
+# Your actual database - contains password hashes and real user data
+data/
+!data/.gitkeep
+
+# Your actual course content - large, and not yours to publish
+courses/
+!courses/.gitkeep
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Backend
+server/__pycache__/
+server/*.pyc
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
+*.log
